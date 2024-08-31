@@ -5,7 +5,7 @@ namespace ProjectForum.Models
 {
     public class SiteUser: IdentityUser
     {
-        public string Username { get; set; }
+        public string SiteUsername { get; set; }
 
         // profile picture type
         public string ContentType { get; set; }

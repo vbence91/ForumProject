@@ -24,19 +24,19 @@ namespace ForumProject.Data
                 .HasOne(t => t.Owner)
                 .WithMany(t => t.Posts)
                 .HasForeignKey(t => t.OwnerId)
-                .OnDelete(DeleteBehavior.Cascade);
+                .OnDelete(DeleteBehavior.NoAction);
 
             builder.Entity<ForumPost>()
                 .HasMany(t => t.Comments)
                 .WithOne(t => t.ForumPost)
                 .HasForeignKey(t => t.PostId)
-                .OnDelete(DeleteBehavior.Cascade);
+                .OnDelete(DeleteBehavior.NoAction);
 
             builder.Entity<ForumPostComment>()
                 .HasOne(t => t.Owner)
                 .WithMany(t => t.Comments)
                 .HasForeignKey(t => t.OwnerId)
-                .OnDelete(DeleteBehavior.Cascade);
+                .OnDelete(DeleteBehavior.NoAction);
 
 
             base.OnModelCreating(builder);
