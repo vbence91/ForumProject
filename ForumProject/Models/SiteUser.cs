@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Identity;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ProjectForum.Models
 {
@@ -11,5 +12,11 @@ namespace ProjectForum.Models
 
         // profile picture data
         public byte[] Data { get; set; }
+
+        [NotMapped]
+        public virtual IEnumerable<ForumPost> Posts { get; set; }
+
+        [NotMapped]
+        public virtual IEnumerable<ForumPostComment> Comments { get; set; }
     }
 }

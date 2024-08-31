@@ -22,12 +22,22 @@ namespace ForumProject.Data
         {
             builder.Entity<ForumPost>()
                 .HasOne(t => t.Owner)
-                .WithMany()
+                .WithMany(t => t.Posts)
                 .HasForeignKey(t => t.OwnerId)
                 .OnDelete(DeleteBehavior.Cascade);
 
-            // TODO ForumPost - ForumPostComment many to many
-                
+            builder.Entity<ForumPost>()
+                .HasMany(t => t.Comments)
+                .WithOne(t => t.ForumPost)
+                .HasForeignKey(t => t.PostId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            builder.Entity<ForumPostComment>()
+                .HasOne(t => t.Owner)
+                .WithMany(t => t.Comments)
+                .HasForeignKey(t => t.OwnerId)
+                .OnDelete(DeleteBehavior.Cascade);
+
 
             base.OnModelCreating(builder);
         }
