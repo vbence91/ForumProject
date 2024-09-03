@@ -1,0 +1,14 @@
+﻿@model IEnumerable<SiteUser>
+@using Microsoft.AspNetCore.Identity
+@using ProjectForum.Models;
+@inject SignInManager<SiteUser> SignInManager
+@inject UserManager<SiteUser> UserManager
+
+<ul>
+    @foreach(var user in Model) {
+    <li>
+        @user.DisplayName
+    </li>     
+    }
+
+</ul>
