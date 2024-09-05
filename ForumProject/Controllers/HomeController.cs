@@ -54,6 +54,34 @@ namespace ForumProject.Controllers
         }
 
         [Authorize(Roles = "Admin")]
+        public async Task<IActionResult> GrantAdmin(string uid) 
+        { 
+            var user = _userManager.Users.FirstOrDefault(t => t.Id == uid);
+            await _userManager.AddToRoleAsync(user, "Admin");
+            return RedirectToAction(nameof(Users));
+        }
+
+        [Authorize(Roles = "Admin")]
+        public async Task<IActionResult> RemoveAdmin(string uid)
+        {
+            var user = _userManager.Users.FirstOrDefault(t => t.Id == uid);
+            await _userManager.RemoveFromRoleAsync(user, "Admin");
+            return RedirectToAction(nameof(Users));
+        }
+
+        [Authorize(Roles = "Admin")]
+        public IActionResult DeleteUser(string uid)
+        {
+            var user = _db.Users.FirstOrDefault(t => t.Id == uid);
+            if(user != null)
+            {
+                _db.Users.Remove(user);
+            }
+            _db.SaveChanges();
+            return RedirectToAction(nameof(Users));
+        }
+
+        [Authorize(Roles = "Admin")]
         public IActionResult Privacy()
         {
             return View();

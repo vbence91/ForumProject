@@ -8,7 +8,16 @@
     @foreach(var user in Model) {
     <li>
         @user.DisplayName
-    </li>     
+            @if(await UserManager.IsInRoleAsync(user, "Admin"))
+            {
+                <a class="btn btn-danger" href="/Home/RemoveAdmin?uid=@user.Id">Remove admin rights</a>
+            }
+            else
+            {
+                <a class="btn btn-success" href="/Home/GrantAdmin?uid=@user.Id">Grant admin rights</a>
+            }
+            <a class="btn btn-warning" href="/Home/DeleteUser?uid=@user.Id">Delete user</a>
+        </li>     
     }
 
 </ul>
