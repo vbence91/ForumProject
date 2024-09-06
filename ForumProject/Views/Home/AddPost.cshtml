@@ -1,0 +1,24 @@
+﻿@using ForumProject.Models.ViewModel;
+@using Microsoft.AspNetCore.Identity;
+@using ProjectForum.Models;
+@model ForumPostViewModel
+@inject SignInManager<SiteUser> SignInManager
+@inject UserManager<SiteUser> UserManager
+
+@if (SignInManager.IsSignedIn(User))
+{
+    var user = await UserManager.GetUserAsync(User);
+    <h2>Add a new post</h2>
+    <form action="/Home/AddPost" method="post">
+        <div class="form-group mb-3">
+            <label for="post-title">Title</label>
+            <input type="text" class="form-control" id="post-title" placeholder="Title" asp-for="Title">
+        </div>
+        <div class="form-group">
+            <textarea class="form-control" id="post-body" rows="5" asp-for="Content"></textarea>
+        </div>
+        <input type="hidden" name="ownerID" asp-for="OwnerId" value=@user.Id>
+        <input type="submit" class="btn btn-primary btn-lg" value="Submit" />
+    </form>
+}
+

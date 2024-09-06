@@ -1,8 +1,33 @@
-﻿@{
+﻿@using ProjectForum.Models;
+@model IEnumerable<ForumPost>
+
+@{
     ViewData["Title"] = "Home Page";
 }
 
+
 <div class="text-center">
     <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th scope="col">Title</th>
+                <th scope="col">Poster</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var forumPost in Model.GroupBy(t => t.Title))
+            {
+                <tr>
+                    <td>@forumPost.Key</td>
+                    <td>
+                    @foreach (var item in forumPost)
+                    {
+                        @item.Owner.DisplayName
+                    }
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
 </div>

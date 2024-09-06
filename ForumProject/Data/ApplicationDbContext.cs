@@ -6,11 +6,11 @@ namespace ForumProject.Data
 {
     public class ApplicationDbContext : IdentityDbContext
     {
-        public DbSet<ForumPost> Posts { get; set; }
+        public virtual DbSet<ForumPost> Posts { get; set; }
 
-        public DbSet<SiteUser>  Users { get; set; }
+        public virtual DbSet<SiteUser>  Users { get; set; }
 
-        public DbSet<ForumPostComment> Comments { get; set; }
+        public virtual DbSet<ForumPostComment> Comments { get; set; }
 
 
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
