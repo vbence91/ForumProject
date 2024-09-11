@@ -84,31 +84,7 @@ namespace ForumProject.Controllers
             _db.SaveChanges();
             return RedirectToAction(nameof(Users));
         }
-        [Authorize]
-        [HttpGet]
-        public IActionResult AddPost()
-        {
-            return View();
-        }
-        [Authorize]
-        [HttpPost]
-        public IActionResult AddPost(ForumPostViewModel forumPostVM)
-        {
-            
-            if(!ModelState.IsValid)
-            {
-                return View(forumPostVM);
-            }
-            var forumPost = new ForumPost();
-            forumPost.Title = forumPostVM.Title;
-            forumPost.Content = forumPostVM.Content;
-            forumPost.OwnerId = forumPostVM.OwnerId;
-            forumPost.Owner = _db.Users.FirstOrDefault(t => t.Id.Equals(forumPostVM.OwnerId));
-            _db.Posts.Add(forumPost);
-            _db.SaveChanges();
-            return RedirectToAction(nameof(Index));
-        }
-
+        
         public IActionResult Privacy()
         {
             return View();

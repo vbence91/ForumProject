@@ -9,7 +9,7 @@
 {
     var user = await UserManager.GetUserAsync(User);
     <h2>Add a new post</h2>
-    <form action="/Home/AddPost" method="post">
+    <form action="/Post/AddPost" method="post">
         <div class="form-group mb-3">
             <label for="post-title">Title</label>
             <input type="text" class="form-control" id="post-title" placeholder="Title" asp-for="Title">
