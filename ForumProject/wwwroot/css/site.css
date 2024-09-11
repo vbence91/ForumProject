@@ -16,3 +16,42 @@ html {
 body {
   margin-bottom: 60px;
 }
+
+.postContainer {
+    margin: auto;
+    width: 60%;
+    padding: 2em;
+    text-align: left;
+    
+}
+
+.forumPost-user {
+    padding-bottom: 0.8em;
+}
+
+.forumPost-title {
+    font-size: 1.1em;
+    font-weight: 500;
+    padding-bottom: 0.8em;
+}
+
+.forumPost-content {
+    text-align: justify;
+}
+
+.postUpperPart {
+    display: flex;
+    font-size: 0.8em;
+}
+
+.dateCreated {
+    font-weight: 100;
+}
+
+.fa-circle {
+    font-size: 0.5em;
+    padding-left: 1em;
+    padding-right: 1em;
+    vertical-align: middle;
+    text-align: center;
+}

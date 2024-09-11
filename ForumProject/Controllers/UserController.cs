@@ -47,8 +47,21 @@ namespace ForumProject.Controllers
         public IActionResult DeleteUser(string uid)
         {
             var user = _db.Users.FirstOrDefault(t => t.Id == uid);
+            var deletedUser = _db.Users.FirstOrDefault(t => t.DisplayName.Equals("DELETED_USER"));
+            if (deletedUser == null)
+            {
+                deletedUser = new SiteUser() { DisplayName = "DELETED_USER" };
+            }
             if (user != null)
             {
+                var userPosts = user.Posts.ToList();
+                if(userPosts.Count > 0) 
+                { 
+                    foreach(var post in userPosts)
+                    {
+                        post.Owner = deletedUser;
+                    }
+                }
                 _db.Users.Remove(user);
             }
             _db.SaveChanges();

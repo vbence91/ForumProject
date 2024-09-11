@@ -38,6 +38,18 @@ namespace ForumProject.Data
                 .HasForeignKey(t => t.OwnerId)
                 .OnDelete(DeleteBehavior.NoAction);
 
+            builder.Entity<SiteUser>()
+                .HasMany(t => t.Posts)
+                .WithOne(t =>t.Owner)
+                .HasForeignKey(t => t.OwnerId)
+                .OnDelete(DeleteBehavior.NoAction);
+
+            builder.Entity<SiteUser>()
+                .HasMany(t => t.Comments)
+                .WithOne(t => t.Owner)
+                .HasForeignKey(t => t.OwnerId)
+                .OnDelete(DeleteBehavior.NoAction);
+
 
             base.OnModelCreating(builder);
         }

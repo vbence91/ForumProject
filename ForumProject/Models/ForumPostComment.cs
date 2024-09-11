@@ -11,12 +11,16 @@ namespace ProjectForum.Models
         [Required]  
         public string PostId { get; set; }
 
-        [Required]
-        public string OwnerId { get; set; }
+        
+        public string? OwnerId { get; set; }
 
         [Required]
         [MaxLength(100)]
         public string Content { get; set; }
+
+        public int Rating { get; set; }
+
+        public DateTime DateCreated { get; set; }
 
         [NotMapped]
         public virtual SiteUser Owner { get; set; }
@@ -26,7 +30,9 @@ namespace ProjectForum.Models
 
         public ForumPostComment()
         {
+            DateCreated = DateTime.Now;
             Uid = Guid.NewGuid().ToString();
+            Rating = 0;
         }
     }
 }

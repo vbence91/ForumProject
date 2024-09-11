@@ -16,20 +16,23 @@
     <tbody>
         @foreach(var user in Model)
         {
-            <tr>
-                <td>@user.DisplayName</td>
-                <td>
-                    @if (await UserManager.IsInRoleAsync(user, "Admin"))
-                    {
-                        <a class="btn btn-danger" href="/User/RemoveAdmin?uid=@user.Id">Remove admin rights</a>
-                    }
-                    else
-                    {
-                        <a class="btn btn-success" href="/User/GrantAdmin?uid=@user.Id">Grant admin rights</a>
-                    }
-                </td>
-                <td><a class="btn btn-warning" href="/User/DeleteUser?uid=@user.Id">Delete user</a></td>
-            </tr>
+            if(!user.DisplayName.Equals("DELETED_USER"))
+            {
+                <tr>
+                    <td>@user.DisplayName</td>
+                    <td>
+                        @if (await UserManager.IsInRoleAsync(user, "Admin"))
+                        {
+                            <a class="btn btn-danger" href="/User/RemoveAdmin?uid=@user.Id">Remove admin rights</a>
+                        }
+                        else
+                        {
+                            <a class="btn btn-success" href="/User/GrantAdmin?uid=@user.Id">Grant admin rights</a>
+                        }
+                    </td>
+                    <td><a class="btn btn-warning" href="/User/DeleteUser?uid=@user.Id">Delete user</a></td>
+                </tr>
+            }
         }
     </tbody>
 </table>

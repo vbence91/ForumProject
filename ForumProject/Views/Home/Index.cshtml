@@ -1,33 +1,26 @@
 ﻿@using ProjectForum.Models;
 @model IEnumerable<ForumPost>
 
+
 @{
     ViewData["Title"] = "Home Page";
 }
 
-
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <table class="table table-striped">
-        <thead>
-            <tr>
-                <th scope="col">Title</th>
-                <th scope="col">Poster</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var forumPost in Model.GroupBy(t => t.Title))
-            {
-                <tr>
-                    <td>@forumPost.Key</td>
-                    <td>
-                    @foreach (var item in forumPost)
-                    {
-                        @item.Owner.DisplayName
-                    }
-                    </td>
-                </tr>
-            }
-        </tbody>
-    </table>
+<div class="text-center forumPost">
+    @foreach (var forumPost in Model.GroupBy(t => t.DateCreated))
+    {
+        foreach(var item in forumPost)
+        {
+            <div class="postContainer">
+                <hr />
+                <div class="postUpperPart">
+                    <div class="forumPost-user">@item.Owner.DisplayName<i class="fa-solid fa-circle"></i></div>
+                    <div class="dateCreated">@item.DateCreated.ToString("dd-MM-yyyy")</div>
+                </div>
+                <div class="forumPost-title">@item.Title</div>
+                <div class="forumPost-content">@item.Content</div>
+            </div>
+        }
+    }
 </div>
+

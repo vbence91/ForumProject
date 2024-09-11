@@ -41,5 +41,18 @@ namespace ForumProject.Controllers
             _db.SaveChanges();
             return RedirectToAction("Index", "Home", new { area = ""});
         }
+
+        [Authorize(Roles = "Admin")]
+        public IActionResult DeleteUserPost(int uid)
+        {
+            var post = _db.Posts.FirstOrDefault(t => t.Uid.Equals(uid));
+
+            if (post != null)
+            {
+                _db.Posts.Remove(post);
+            }
+            _db.SaveChanges();
+            return RedirectToAction("User", "User", new { area = "" });
+        }
     }
 }
