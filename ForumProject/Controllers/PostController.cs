@@ -1,7 +1,6 @@
 ﻿using ForumProject.Data;
 using ForumProject.Models.ViewModel;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using ProjectForum.Models;
 

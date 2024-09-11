@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using ProjectForum.Models;
-using System.Data;
 
 namespace ForumProject.Controllers
 {
@@ -55,5 +54,23 @@ namespace ForumProject.Controllers
             _db.SaveChanges();
             return RedirectToAction(nameof(Users));
         }
+
+        //public async Task<IActionResult> DelegateAdmin()
+        //{
+        //    var principal = this.User;
+        //    var user = await _userManager.GetUserAsync(principal);
+        //    var role = new IdentityRole()
+        //    {
+        //        Name = "Admin"
+        //    };
+
+        //    if (!await _roleManager.RoleExistsAsync("Admin"))
+        //    {
+        //        await _roleManager.CreateAsync(role);
+        //    }
+        //    await _userManager.AddToRoleAsync(user, "Admin");
+
+        //    return RedirectToAction(nameof(Index));
+        //}
     }
 }
