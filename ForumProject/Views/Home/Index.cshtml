@@ -7,7 +7,7 @@
 }
 
 <div class="text-center forumPost">
-    @foreach (var forumPost in Model.GroupBy(t => t.DateCreated))
+    @foreach (var forumPost in Model.GroupBy(t => t.DateCreated).OrderByDescending(t => t.Key))
     {
         foreach(var item in forumPost)
         {
@@ -19,6 +19,16 @@
                 </div>
                 <div class="forumPost-title">@item.Title</div>
                 <div class="forumPost-content">@item.Content</div>
+                <div class="post-functions-wrapper">
+                    <div class="rating-wrapper mr-2">
+                        <i class="fa-solid fa-circle-arrow-up"></i>
+                        <span class="rating-number">@item.Rating</span>
+                        <i class="fa-solid fa-circle-arrow-down"></i>
+                    </div>
+                    <div class="comment-buttom-wrapper">
+                        <a href="/Post/Comments?Uid=@item.Uid"><i class="fa-regular fa-comment mr-1"></i><span class="comment-count">@item.Comments.ToList().Count</span></a>
+                    </div>
+                </div>
             </div>
         }
     }

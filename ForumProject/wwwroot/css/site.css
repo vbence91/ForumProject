@@ -55,3 +55,8 @@ body {
     vertical-align: middle;
     text-align: center;
 }
+
+.post-functions-wrapper {
+    display: flex;
+    font-size: 1.2em;
+}

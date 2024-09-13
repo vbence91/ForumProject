@@ -41,6 +41,27 @@ namespace ForumProject.Controllers
             _db.SaveChanges();
             return RedirectToAction("Index", "Home", new { area = ""});
         }
+        [HttpGet]
+        public IActionResult Comments(string uid)
+        {
+            var post = _db.Posts.FirstOrDefault(t =>t.Uid == uid);
+            
+            return View(post);
+        }
+        [HttpPost]
+        public IActionResult AddComment(string content, string ownerId, string postId)
+        {
+            var comment = new ForumPostComment();
+            comment.Content = content;
+            comment.OwnerId = ownerId;
+            comment.PostId = postId;
+            comment.Owner = _db.Users.FirstOrDefault(t => t.Id == ownerId);
+
+            _db.Comments.Add(comment);
+            _db.SaveChanges();
+
+            return RedirectToAction("Index", "Home", new { area = "" });
+        }
 
         [Authorize(Roles = "Admin")]
         public IActionResult DeleteUserPost(int uid)
