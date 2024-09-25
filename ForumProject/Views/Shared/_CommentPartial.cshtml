@@ -1,18 +1,42 @@
 ﻿@using ProjectForum.Models
-@model ForumPostComment
-@using Microsoft.AspNetCore.Identity;
+@model IEnumerable<Comment>
+@using Microsoft.AspNetCore.Identity
 @inject SignInManager<SiteUser> SignInManager
 @inject UserManager<SiteUser> UserManager
 
-@if (SignInManager.IsSignedIn(User))
+@foreach (var comment in Model.GroupBy(t => t.DateCreated).OrderBy(t => t.Key))
 {
-    var user = await UserManager.GetUserAsync(User);
-    <form action="/Post/AddComment" method="post">
-        <div class="form-group">
-            <textarea class="form-control" id="post-body" rows="3" asp-for="Content"></textarea>
+    @foreach (var item in comment)
+    {
+        <hr />
+        <div class="postUpperPart">
+            <div class="forumPost-user">@item.Owner.DisplayName<i class="fa-solid fa-circle"></i></div>
+            <div class="dateCreated">@item.DateCreated.ToString("dd-MM-yyyy")</div>
         </div>
-        <input type="hidden" name="ownerID" asp-for="OwnerId" value=@user.Id>
-        <input type="submit" class="btn btn-primary btn-lg" value="Submit" />
-    </form>
+        <div class="comment-body">
+            @item.Content
+        </div>
+        <div class="ml-3">
+            @{
+                var list = Model.Where(t => t.ParentId.Equals(item.Uid));
+                if (list.Any())
+                {
+                    <p>REPLIES</p>
+                    @foreach (var reply in list)
+                    {
+                        <div class="mb-2">
+                            @reply.Owner.DisplayName
+                            @reply.Content
+                        </div>
+
+                    }
+                }
+            }   
+        </div>
+
+    }
 }
+
+
+
 

@@ -25,18 +25,18 @@ namespace ForumProject.Controllers
         }
         [Authorize]
         [HttpPost]
-        public IActionResult AddPost(ForumPostViewModel forumPostVM)
+        public IActionResult AddPost(ForumPostDTO forumPostDTO)
         {
 
             if (!ModelState.IsValid)
             {
-                return View(forumPostVM);
+                return View(forumPostDTO);
             }
             var forumPost = new ForumPost();
-            forumPost.Title = forumPostVM.Title;
-            forumPost.Content = forumPostVM.Content;
-            forumPost.OwnerId = forumPostVM.OwnerId;
-            forumPost.Owner = _db.Users.FirstOrDefault(t => t.Id.Equals(forumPostVM.OwnerId));
+            forumPost.Title = forumPostDTO.Title;
+            forumPost.Content = forumPostDTO.Content;
+            forumPost.OwnerId = forumPostDTO.OwnerId;
+            forumPost.Owner = _db.Users.FirstOrDefault(t => t.Id.Equals(forumPostDTO.OwnerId));
             _db.Posts.Add(forumPost);
             _db.SaveChanges();
             return RedirectToAction("Index", "Home", new { area = ""});
@@ -48,19 +48,21 @@ namespace ForumProject.Controllers
             
             return View(post);
         }
+        [Authorize]
         [HttpPost]
         public IActionResult AddComment(string content, string ownerId, string postId)
         {
-            var comment = new ForumPostComment();
+            var comment = new Comment();
             comment.Content = content;
             comment.OwnerId = ownerId;
             comment.PostId = postId;
+            comment.ParentId = postId;
             comment.Owner = _db.Users.FirstOrDefault(t => t.Id == ownerId);
 
             _db.Comments.Add(comment);
             _db.SaveChanges();
 
-            return RedirectToAction("Index", "Home", new { area = "" });
+            return RedirectToAction("Comments", new {uid = postId});
         }
 
         [Authorize(Roles = "Admin")]

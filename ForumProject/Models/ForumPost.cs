@@ -25,7 +25,7 @@ namespace ProjectForum.Models
         public virtual SiteUser Owner { get; set; }
 
         [NotMapped]
-        public virtual IEnumerable<ForumPostComment> Comments { get; set; }
+        public virtual IEnumerable<Comment> Comments { get; set; }
 
         public ForumPost()
         {

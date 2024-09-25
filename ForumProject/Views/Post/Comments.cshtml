@@ -24,22 +24,6 @@
     </div>
 </div>
 <div class=comments-container>
-    @if (SignInManager.IsSignedIn(User))
-    {
-        var user = await UserManager.GetUserAsync(User);
-        <form action="/Post/AddComment" method="post">
-            <div class="form-group">
-            <textarea class="form-control" name="content" rows="3"></textarea>
-            </div>
-            <input type="hidden" name="ownerID" value=@user.Id>
-            <input type="hidden" name="postID" value=@Model.Uid>
-            <input type="submit" class="btn btn-primary btn-lg" value="Submit" />
-        </form>
-    }
-    @foreach(var comment in Model.Comments)
-    {
-        <hr />
-        <div class="poster">@comment.Owner.DisplayName</div>
-        <div class="comment-body">@comment.Content</div>
-    }
+    <partial name="_AddCommentPartial"/>
 </div>
+<partial name="_CommentPartial" model="@Model.Comments"/>

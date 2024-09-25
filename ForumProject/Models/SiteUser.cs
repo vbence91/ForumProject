@@ -19,6 +19,6 @@ namespace ProjectForum.Models
         public virtual IEnumerable<ForumPost> Posts { get; set; }
 
         [NotMapped]
-        public virtual IEnumerable<ForumPostComment> Comments { get; set; }
+        public virtual IEnumerable<Comment> Comments { get; set; }
     }
 }

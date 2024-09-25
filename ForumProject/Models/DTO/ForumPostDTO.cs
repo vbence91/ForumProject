@@ -2,7 +2,7 @@
 
 namespace ForumProject.Models.ViewModel
 {
-    public class ForumPostViewModel
+    public class ForumPostDTO
     {
         public string OwnerId { get; set; }
 

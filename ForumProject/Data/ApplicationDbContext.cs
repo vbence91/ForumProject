@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+﻿using ForumProject.Models;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using ProjectForum.Models;
 
@@ -10,8 +11,7 @@ namespace ForumProject.Data
 
         public virtual DbSet<SiteUser>  Users { get; set; }
 
-        public virtual DbSet<ForumPostComment> Comments { get; set; }
-
+        public virtual DbSet<Comment> Comments { get; set; }
 
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
@@ -32,12 +32,12 @@ namespace ForumProject.Data
                 .HasForeignKey(t => t.PostId)
                 .OnDelete(DeleteBehavior.NoAction);
 
-            builder.Entity<ForumPostComment>()
+            builder.Entity<Comment>()
                 .HasOne(t => t.Owner)
                 .WithMany(t => t.Comments)
                 .HasForeignKey(t => t.OwnerId)
                 .OnDelete(DeleteBehavior.NoAction);
-
+           
             builder.Entity<SiteUser>()
                 .HasMany(t => t.Posts)
                 .WithOne(t =>t.Owner)
@@ -49,7 +49,6 @@ namespace ForumProject.Data
                 .WithOne(t => t.Owner)
                 .HasForeignKey(t => t.OwnerId)
                 .OnDelete(DeleteBehavior.NoAction);
-
 
             base.OnModelCreating(builder);
         }

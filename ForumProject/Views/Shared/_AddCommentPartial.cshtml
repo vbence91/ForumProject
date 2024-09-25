@@ -1,0 +1,19 @@
+﻿@using Microsoft.AspNetCore.Identity
+@using ProjectForum.Models
+@inject SignInManager<SiteUser> SignInManager
+@inject UserManager<SiteUser> UserManager
+
+@if (SignInManager.IsSignedIn(User))
+{
+    var user = await UserManager.GetUserAsync(User);
+    <form action="/Post/AddComment" method="post">
+        <div class="form-group">
+            <textarea class="form-control" name="content" rows="3"></textarea>
+        </div>
+        <input type="hidden" name="ownerId" value=@user.Id>
+        <input type="hidden" name="postId" value=@Model.Uid>
+        <input type="submit" class="btn btn-primary btn-lg" value="Submit" />
+    </form>
+}
+
+

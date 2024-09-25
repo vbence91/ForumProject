@@ -12,14 +12,14 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ForumProject.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240902123556_removing_siteusername")]
-    partial class removing_siteusername
+    [Migration("20240925133721_normal")]
+    partial class normal
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "6.0.15")
+                .HasAnnotation("ProductVersion", "6.0.33")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
@@ -232,6 +232,43 @@ namespace ForumProject.Data.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
+            modelBuilder.Entity("ProjectForum.Models.Comment", b =>
+                {
+                    b.Property<string>("Uid")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Content")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<DateTime>("DateCreated")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("OwnerId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("ParentId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PostId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int>("Rating")
+                        .HasColumnType("int");
+
+                    b.HasKey("Uid");
+
+                    b.HasIndex("OwnerId");
+
+                    b.HasIndex("PostId");
+
+                    b.ToTable("Comments");
+                });
+
             modelBuilder.Entity("ProjectForum.Models.ForumPost", b =>
                 {
                     b.Property<string>("Uid")
@@ -241,9 +278,15 @@ namespace ForumProject.Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<DateTime>("DateCreated")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("OwnerId")
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
+
+                    b.Property<int>("Rating")
+                        .HasColumnType("int");
 
                     b.Property<string>("Title")
                         .IsRequired()
@@ -257,33 +300,6 @@ namespace ForumProject.Data.Migrations
                     b.ToTable("Posts");
                 });
 
-            modelBuilder.Entity("ProjectForum.Models.ForumPostComment", b =>
-                {
-                    b.Property<string>("Uid")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("Content")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
-
-                    b.Property<string>("OwnerId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("PostId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
-                    b.HasKey("Uid");
-
-                    b.HasIndex("OwnerId");
-
-                    b.HasIndex("PostId");
-
-                    b.ToTable("Comments");
-                });
-
             modelBuilder.Entity("ProjectForum.Models.SiteUser", b =>
                 {
                     b.HasBaseType("Microsoft.AspNetCore.Identity.IdentityUser");
@@ -295,6 +311,11 @@ namespace ForumProject.Data.Migrations
                     b.Property<byte[]>("Data")
                         .IsRequired()
                         .HasColumnType("varbinary(max)");
+
+                    b.Property<string>("DisplayName")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.HasDiscriminator().HasValue("SiteUser");
                 });
@@ -350,18 +371,7 @@ namespace ForumProject.Data.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("ProjectForum.Models.ForumPost", b =>
-                {
-                    b.HasOne("ProjectForum.Models.SiteUser", "Owner")
-                        .WithMany("Posts")
-                        .HasForeignKey("OwnerId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
-                    b.Navigation("Owner");
-                });
-
-            modelBuilder.Entity("ProjectForum.Models.ForumPostComment", b =>
+            modelBuilder.Entity("ProjectForum.Models.Comment", b =>
                 {
                     b.HasOne("ProjectForum.Models.SiteUser", "Owner")
                         .WithMany("Comments")
@@ -376,6 +386,17 @@ namespace ForumProject.Data.Migrations
                         .IsRequired();
 
                     b.Navigation("ForumPost");
+
+                    b.Navigation("Owner");
+                });
+
+            modelBuilder.Entity("ProjectForum.Models.ForumPost", b =>
+                {
+                    b.HasOne("ProjectForum.Models.SiteUser", "Owner")
+                        .WithMany("Posts")
+                        .HasForeignKey("OwnerId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
 
                     b.Navigation("Owner");
                 });
