@@ -31,11 +31,40 @@
 
                     }
                 }
-            }   
+            }
+            @if (SignInManager.IsSignedIn(User))
+            {
+                <button type="submit" class="btn btn-primary btn-lg mb-3" id="reply-btn">Reply</button>
+            }
+            <div id="replyContainer" style="display:none;">
+                <partial name="_AddReplyPartial" model="item"/>
+            </div>
         </div>
-
     }
 }
+
+<script>
+    let btns = document.querySelectorAll('#reply-btn')
+
+    btns.forEach(btn => {
+        let x = btn.nextElementSibling
+        btn.addEventListener('click', event => {
+            if (x.style.display === 'none') {
+                x.style.display = 'block'
+                btn.innerHTML = 'Cancel'
+                btn.classList.remove('btn-primary')
+                btn.classList.add('btn-light')
+            }
+            else {
+                x.style.display = 'none'
+                btn.innerHTML = 'Reply'
+                btn.classList.remove('btn-light')
+                btn.classList.add('btn-primary')
+            }
+        })
+    })
+</script>
+
 
 
 

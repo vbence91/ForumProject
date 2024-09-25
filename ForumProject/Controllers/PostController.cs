@@ -65,6 +65,23 @@ namespace ForumProject.Controllers
             return RedirectToAction("Comments", new {uid = postId});
         }
 
+        [Authorize]
+        [HttpPost]
+        public IActionResult AddReply(string content, string ownerId, string postId, string parentId)
+        {
+            var reply = new Comment();
+            reply.Content = content;
+            reply.OwnerId = ownerId;
+            reply.PostId = postId;
+            reply.ParentId = parentId;
+            reply.Owner = _db.Users.FirstOrDefault(t => t.Id == ownerId);
+
+            _db.Comments.Add(reply);
+            _db.SaveChanges();
+
+            return RedirectToAction("Comments", new { uid = postId });
+        }
+
         [Authorize(Roles = "Admin")]
         public IActionResult DeleteUserPost(int uid)
         {
