@@ -21,15 +21,25 @@
                 var list = Model.Where(t => t.ParentId.Equals(item.Uid));
                 if (list.Any())
                 {
-                    <p>REPLIES</p>
-                    @foreach (var reply in list)
-                    {
-                        <div class="mb-2">
-                            @reply.Owner.DisplayName
-                            @reply.Content
+                    <div class="replies">
+                        <button class="collapsible" id="replies-btn">Replies </button>
+                        <div class="reply-list-wrapper">
+                        <div class="reply-list">
+                            @foreach (var reply in list)
+                            {
+                                <div class="postUpperPart">
+                                    <div class="forumPost-user">@reply.Owner.DisplayName<i class="fa-solid fa-circle"></i></div>
+                                </div>
+                                <div class="comment-body">
+                                    @reply.Content
+                                </div>
+                                <hr />
+                            }
                         </div>
-
-                    }
+                        </div>
+                    </div>
+                    
+                        
                 }
             }
             @if (SignInManager.IsSignedIn(User))
@@ -63,6 +73,25 @@
             }
         })
     })
+
+    let coll = document.querySelectorAll('#replies-btn')
+
+    for (let i = 0; i < coll.length; i++) {
+        coll[i].addEventListener('click', function () {
+            this.classList.toggle('active')
+            this.style.borderBottomRightRadius = 0;
+            this.style.borderBottomLeftRadius = 0;
+            let content = document.querySelectorAll('.reply-list')[i]
+            console.log(content)
+            if (content.style.maxHeight) {
+                content.style.maxHeight = null;
+            } else {
+                content.style.maxHeight = content.scrollHeight + 'px';
+            }
+        })
+
+    }
+
 </script>
 
 

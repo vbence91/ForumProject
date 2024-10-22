@@ -1,4 +1,4 @@
-html {
+﻿html {
   font-size: 14px;
 }
 
@@ -37,11 +37,13 @@ body {
 
 .forumPost-content {
     text-align: justify;
+    padding-bottom:0.8em;
 }
 
 .postUpperPart {
     display: flex;
     font-size: 0.8em;
+    padding-top:0.8em;
 }
 
 .dateCreated {
@@ -59,4 +61,43 @@ body {
 .post-functions-wrapper {
     display: flex;
     font-size: 1.2em;
+}
+
+
+#replies-btn {
+    position: relative;
+    width: fit-content;
+    background-color: dimgrey;
+    color: white;
+    height: fit-content;
+    border: 0;
+    font-size: 1.2em;
+    border: 2px solid black;
+}
+
+.collapsible:after {
+    content: '▼';
+}
+
+.active:after {
+    content: '▲';
+}
+
+.reply-list-wrapper {
+    padding-top: 1.2em;
+}
+
+.reply-list {
+    display: block;
+    justify-content: center;
+    background-color: dimgray;
+    color: white;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.2s ease-out;
+    width: 100% !important;
+    font-size: 1.2rem;
+    justify-content: left;
+    padding-left: 0.8em;
+    padding-right: 0.8em;
 }
