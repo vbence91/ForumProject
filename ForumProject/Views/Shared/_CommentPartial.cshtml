@@ -8,6 +8,7 @@
 {
     @foreach (var item in comment)
     {
+        <div id="@item.Uid">
         <hr />
         <div class="postUpperPart">
             <div class="forumPost-user">@item.Owner.DisplayName<i class="fa-solid fa-circle"></i></div>
@@ -24,24 +25,26 @@
                     <div class="replies">
                         <button class="collapsible" id="replies-btn">Replies </button>
                         <div class="reply-list-wrapper">
-                        <div class="reply-list">
-                            @foreach (var reply in list)
-                            {
-                                <div class="postUpperPart">
-                                    <div class="forumPost-user">@reply.Owner.DisplayName<i class="fa-solid fa-circle"></i></div>
-                                </div>
-                                <div class="comment-body">
-                                    @reply.Content
-                                </div>
-                                <hr />
-                            }
-                        </div>
+                            <div class="reply-list">
+                                @foreach (var reply in list)
+                                {
+                                    <div class="postUpperPart">
+                                        <div class="forumPost-user">@reply.Owner.DisplayName<i class="fa-solid fa-circle"></i></div>
+                                    </div>
+                                    <div class="comment-body">
+                                        @reply.Content
+                                    </div>
+                                        <a href="#@reply.Uid">Jump to comment ▼</a>
+                                    <hr />
+                                }
+                            </div>
                         </div>
                     </div>
                     
                         
                 }
             }
+            </div>
             @if (SignInManager.IsSignedIn(User))
             {
                 <button type="submit" class="btn btn-primary btn-lg mb-3" id="reply-btn">Reply</button>
