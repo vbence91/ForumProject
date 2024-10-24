@@ -45,13 +45,7 @@
                 }
             }
             </div>
-            @if (SignInManager.IsSignedIn(User))
-            {
-                <button type="submit" class="btn btn-primary btn-lg mb-3" id="reply-btn">Reply</button>
-            }
-            <div id="replyContainer" style="display:none;">
-                <partial name="_AddReplyPartial" model="item"/>
-            </div>
+            <partial name="_AddReplyPartial" model="item"/>
         </div>
     }
 }
