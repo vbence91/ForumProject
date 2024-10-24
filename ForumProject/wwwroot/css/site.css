@@ -111,3 +111,7 @@ body {
         text-decoration: none;
         color: red;
     }
+
+#cancel-btn {
+    display: inline-block;
+}

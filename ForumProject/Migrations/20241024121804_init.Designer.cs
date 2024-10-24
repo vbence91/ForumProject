@@ -9,11 +9,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
 
-namespace ForumProject.Data.Migrations
+namespace ForumProject.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240925134655_nullable")]
-    partial class nullable
+    [Migration("20241024121804_init")]
+    partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
